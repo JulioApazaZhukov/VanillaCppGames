@@ -1,6 +1,7 @@
 #include <windows.h>
 #include <iostream>
 #include <chrono>
+#include <conio.h>
 
 using std::cout;
 using std::cin;

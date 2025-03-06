@@ -2,6 +2,7 @@
 
 void border (void);
 void snakeMovement (void);
+char detectArrowKey (void);
 
 const char snakebody = char(254);
 
@@ -21,11 +22,40 @@ void border ()
     gotoxy(99,27);  cout << char(188);
 }
 
+char detectArrowKey ()
+{
+    unsigned char ch1 = _getch();
+    if (ch1 == 224) {
+        unsigned char ch2 = _getch();
+        switch (ch2) {
+            case 72: return 'u'; break;
+            case 80: return 'd'; break;
+            case 75: return 'l'; break;
+            case 77: return 'r'; break;
+        }
+    }
+}
+
 void snakeMovement ()
 {
-    for (int i = 5; i < 85; i++){
-        Sleep(10);
-        gotoxy(i,15); cout << snakebody;
+    int x = 10;
+    int y = 10;
+    gotoxy(x,y);
+    while (true)
+    {
+        char direction = detectArrowKey();
+        switch (direction) {
+            case 'u':
+                gotoxy(x,y--); cout << snakebody; break;
+            case 'd':
+                gotoxy(x,y++); cout << snakebody; break;
+            case 'l':
+                gotoxy(x--,y); cout << snakebody; break;
+            case 'r':
+                gotoxy(x++,y); cout << snakebody; break;
+            default:
+                break;
+        }
     }
 }
 
