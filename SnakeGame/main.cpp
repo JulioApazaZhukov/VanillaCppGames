@@ -34,6 +34,7 @@ char detectArrowKey ()
             case 77: return 'r'; break;
         }
     }
+    return '0';
 }
 
 void snakeMovement ()
