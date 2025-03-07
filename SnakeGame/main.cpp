@@ -4,7 +4,8 @@ void border (void);
 void snakeMovement (void);
 char detectArrowKey (void);
 
-const char snakebody = char(219);//char(254);
+const char snakebody = char(219);       //char(254);
+const char emptySpace = ' ';
 
 void border ()
 {
@@ -37,34 +38,42 @@ char detectArrowKey ()
     return '0';
 }
 
-void snakeMovement ()
+
+void snakeMovement()
 {
-    int x = 10;
-    int y = 10;
-    gotoxy(x,y);
-    char direction = '0';
+    int x = 10, y = 10;
+    char direction = 'r';
+    vector<pair<int, int>> snake;
+    size_t maxLength = 10; 
+
     while (true)
     {
-        if (_kbhit())
+        char newDirection = detectArrowKey();
+        if (newDirection != '0' && (
+            (newDirection == 'u' && direction != 'd') ||
+            (newDirection == 'd' && direction != 'u') ||
+            (newDirection == 'l' && direction != 'r') ||
+            (newDirection == 'r' && direction != 'l')))
         {
-            char newDirection = detectArrowKey();
-            if (newDirection != '0')
-            {
-                direction = newDirection;
-            }
+            direction = newDirection;
         }
+
         switch (direction) {
-            case 'u':
-                gotoxy(x,y--); cout << snakebody; break;
-            case 'd':
-                gotoxy(x,y++); cout << snakebody; break;
-            case 'l':
-                gotoxy(x--,y); cout << snakebody; break;
-            case 'r':
-                gotoxy(x++,y); cout << snakebody; break;
-            default:
-                break;
+            case 'u': y--; break;
+            case 'd': y++; break;
+            case 'l': x--; break;
+            case 'r': x++; break;
         }
+
+        snake.push_back({x, y});
+        gotoxy(x, y); cout << snakebody;
+
+        if (snake.size() > maxLength) {
+            auto tail = snake.front();
+            gotoxy(tail.first, tail.second); cout << emptySpace;
+            snake.erase(snake.begin()); 
+        }
+
         Sleep(100);
     }
 }
