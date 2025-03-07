@@ -4,7 +4,7 @@ void border (void);
 void snakeMovement (void);
 char detectArrowKey (void);
 
-const char snakebody = char(254);
+const char snakebody = char(219);//char(254);
 
 void border ()
 {
@@ -42,9 +42,17 @@ void snakeMovement ()
     int x = 10;
     int y = 10;
     gotoxy(x,y);
+    char direction = '0';
     while (true)
     {
-        char direction = detectArrowKey();
+        if (_kbhit())
+        {
+            char newDirection = detectArrowKey();
+            if (newDirection != '0')
+            {
+                direction = newDirection;
+            }
+        }
         switch (direction) {
             case 'u':
                 gotoxy(x,y--); cout << snakebody; break;
@@ -57,11 +65,15 @@ void snakeMovement ()
             default:
                 break;
         }
+        Sleep(100);
     }
 }
 
 int main ()
 {
+    CONSOLE_CURSOR_INFO cci = { 100, FALSE };
+	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cci);
+    
     consoleStyle();
     border();
 
