@@ -3,6 +3,7 @@
 void border (void);
 void snakeMovement (void);
 char detectArrowKey (void);
+void generateFood (void);
 
 const char snakebody = char(219);       //char(254);
 const char emptySpace = ' ';
@@ -45,6 +46,7 @@ void snakeMovement()
     char direction = 'r';
     vector<pair<int, int>> snake;
     size_t maxLength = 10; 
+    generateFood();
 
     while (true)
     {
@@ -76,6 +78,14 @@ void snakeMovement()
 
         Sleep(100);
     }
+}
+void generateFood()
+{
+    int foodX = rand() % 98 + 2; 
+    int foodY = rand() % 26 + 1; 
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_INTENSITY);
+    gotoxy(foodX, foodY); cout << char(254);
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 }
 
 int main ()
